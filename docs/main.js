@@ -10,14 +10,14 @@ function startTimer() {
   startTime = performance.now();
   timerInterval = setInterval(() => {
     const currentTime = (performance.now() - startTime) / 1000;
-    timerEl.textContent = `タイム: ${currentTime.toFixed(3)} 秒`;
+    timerEl.textContent = `タイム: ${currentTime.toFixed(2)} 秒`;
   }, 10);
 }
 
 function stopTimer() {
   clearInterval(timerInterval);
   const finalTime = (performance.now() - startTime) / 1000;
-  timerEl.textContent = `タイム: ${finalTime.toFixed(3)} 秒`;
+  timerEl.textContent = `タイム: ${finalTime.toFixed(2)} 秒`;
   return finalTime;
 }
 
@@ -35,7 +35,7 @@ function displayRanking() {
   rankingEl.innerHTML = '';
   ranking.forEach((time, index) => {
     const li = document.createElement('li');
-    li.textContent = `${(index + 1)}位: ${time.toFixed(3)} 秒`;
+    li.textContent = `${(index + 1)}位: ${time.toFixed(2)} 秒`;
     rankingEl.appendChild(li);
   });
 }
