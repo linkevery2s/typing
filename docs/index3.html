@@ -146,9 +146,11 @@ clearInterval(interval);
 
 const t=(performance.now()-startTime)/1000;
 
-saveRanking(t);
+const finalTime = Number(t.toFixed(2));
 
-input.disabled=true;
+timer.textContent = finalTime.toFixed(2);
+
+saveRanking(finalTime);
 
 }
 
