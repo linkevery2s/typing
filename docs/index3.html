@@ -15,7 +15,7 @@
 </h1>
 
 <div class="text-center text-gray-500 mb-6">
-World Record: 3.25 sec
+Alphabet A-Z Speed Challenge
 </div>
 
 <div id="countdown" class="text-center text-6xl text-red-500 mb-6"></div>
@@ -27,7 +27,7 @@ class="w-full p-3 text-center text-lg border rounded-lg"
 disabled
 />
 
-<div class="grid grid-cols-4 gap-4 mt-6 text-center">
+<div class="grid grid-cols-3 gap-4 mt-6 text-center">
 
 <div>
 <div class="text-gray-500">TIME</div>
@@ -42,11 +42,6 @@ disabled
 <div>
 <div class="text-gray-500">MISS</div>
 <div id="miss" class="text-2xl font-bold">0</div>
-</div>
-
-<div>
-<div class="text-gray-500">WR PACE</div>
-<div id="pace" class="text-2xl font-bold">-</div>
 </div>
 
 </div>
@@ -73,14 +68,12 @@ START
 <script>
 
 const correctText="A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
-const WR=3.25;
 
 const input=document.getElementById("input");
 const target=document.getElementById("target");
 const timer=document.getElementById("timer");
 const kpsEl=document.getElementById("kps");
 const missEl=document.getElementById("miss");
-const paceEl=document.getElementById("pace");
 const rankingEl=document.getElementById("ranking");
 const startBtn=document.getElementById("startBtn");
 const countdown=document.getElementById("countdown");
@@ -94,7 +87,6 @@ target.innerHTML=correctText.split("").map(c=>`<span>${c}</span>`).join("");
 function startCountdown(){
 
 let c=3;
-
 countdown.textContent=c;
 
 const cd=setInterval(()=>{
@@ -108,7 +100,6 @@ countdown.textContent=c;
 }else{
 
 countdown.textContent="GO";
-
 clearInterval(cd);
 
 setTimeout(()=>{
@@ -146,10 +137,6 @@ timer.textContent=t.toFixed(2);
 const kps=input.value.length/t;
 
 kpsEl.textContent=kps.toFixed(2);
-
-const pace=(t/WR).toFixed(2);
-
-paceEl.textContent=pace;
 
 }
 
