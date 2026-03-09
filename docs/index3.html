@@ -6,46 +6,46 @@
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center">
+<body class="bg-white text-gray-900 min-h-screen pt-10">
 
-<div class="bg-slate-800 p-8 rounded-2xl shadow-xl w-full max-w-3xl">
+<div class="max-w-3xl mx-auto bg-gray-50 p-8 rounded-xl shadow">
 
 <h1 class="text-3xl font-bold text-center mb-2">
 ⌨️ Typing World Record Trainer
 </h1>
 
-<div class="text-center text-gray-400 mb-6">
+<div class="text-center text-gray-500 mb-6">
 World Record: 3.25 sec
 </div>
 
-<div id="countdown" class="text-center text-6xl text-yellow-400 mb-6"></div>
+<div id="countdown" class="text-center text-6xl text-red-500 mb-6"></div>
 
 <div id="target" class="text-xl font-mono tracking-widest text-center mb-6"></div>
 
 <input id="input"
-class="w-full p-3 text-center text-lg rounded-lg text-black"
+class="w-full p-3 text-center text-lg border rounded-lg"
 disabled
 />
 
 <div class="grid grid-cols-4 gap-4 mt-6 text-center">
 
 <div>
-<div class="text-gray-400">TIME</div>
+<div class="text-gray-500">TIME</div>
 <div id="timer" class="text-2xl font-bold">0.00</div>
 </div>
 
 <div>
-<div class="text-gray-400">KPS</div>
+<div class="text-gray-500">KPS</div>
 <div id="kps" class="text-2xl font-bold">0</div>
 </div>
 
 <div>
-<div class="text-gray-400">MISS</div>
+<div class="text-gray-500">MISS</div>
 <div id="miss" class="text-2xl font-bold">0</div>
 </div>
 
 <div>
-<div class="text-gray-400">WR PACE</div>
+<div class="text-gray-500">WR PACE</div>
 <div id="pace" class="text-2xl font-bold">-</div>
 </div>
 
@@ -54,17 +54,17 @@ disabled
 <div class="text-center mt-6">
 
 <button id="startBtn"
-class="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg">
+class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg">
 START
 </button>
 
 </div>
 
-<div class="mt-8">
+<div class="mt-10">
 
 <h2 class="font-bold mb-2">🏆 Ranking</h2>
 
-<ol id="ranking" class="list-decimal ml-6 text-gray-300"></ol>
+<ol id="ranking" class="list-decimal ml-6 text-gray-700"></ol>
 
 </div>
 
@@ -112,10 +112,8 @@ countdown.textContent="GO";
 clearInterval(cd);
 
 setTimeout(()=>{
-
 countdown.textContent="";
 startGame();
-
 },500)
 
 }
@@ -215,11 +213,11 @@ s.className="";
 
 }else if(v[i]===correctText[i]){
 
-s.className="text-green-400";
+s.className="text-green-600";
 
 }else{
 
-s.className="text-red-400";
+s.className="text-red-600";
 
 miss++;
 missEl.textContent=miss;
