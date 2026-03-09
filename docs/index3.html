@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Typing World Record Trainer</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center">
+
+<div class="bg-slate-800 p-8 rounded-2xl shadow-xl w-full max-w-3xl">
+
+<h1 class="text-3xl font-bold text-center mb-2">
+⌨️ Typing World Record Trainer
+</h1>
+
+<div class="text-center text-gray-400 mb-6">
+World Record: 3.25 sec
+</div>
+
+<div id="countdown" class="text-center text-6xl text-yellow-400 mb-6"></div>
+
+<div id="target" class="text-xl font-mono tracking-widest text-center mb-6"></div>
+
+<input id="input"
+class="w-full p-3 text-center text-lg rounded-lg text-black"
+disabled
+/>
+
+<div class="grid grid-cols-4 gap-4 mt-6 text-center">
+
+<div>
+<div class="text-gray-400">TIME</div>
+<div id="timer" class="text-2xl font-bold">0.00</div>
+</div>
+
+<div>
+<div class="text-gray-400">KPS</div>
+<div id="kps" class="text-2xl font-bold">0</div>
+</div>
+
+<div>
+<div class="text-gray-400">MISS</div>
+<div id="miss" class="text-2xl font-bold">0</div>
+</div>
+
+<div>
+<div class="text-gray-400">WR PACE</div>
+<div id="pace" class="text-2xl font-bold">-</div>
+</div>
+
+</div>
+
+<div class="text-center mt-6">
+
+<button id="startBtn"
+class="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-lg">
+START
+</button>
+
+</div>
+
+<div class="mt-8">
+
+<h2 class="font-bold mb-2">🏆 Ranking</h2>
+
+<ol id="ranking" class="list-decimal ml-6 text-gray-300"></ol>
+
+</div>
+
+</div>
+
+<script>
+
+const correctText="A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
+const WR=3.25;
+
+const input=document.getElementById("input");
+const target=document.getElementById("target");
+const timer=document.getElementById("timer");
+const kpsEl=document.getElementById("kps");
+const missEl=document.getElementById("miss");
+const paceEl=document.getElementById("pace");
+const rankingEl=document.getElementById("ranking");
+const startBtn=document.getElementById("startBtn");
+const countdown=document.getElementById("countdown");
+
+let startTime;
+let interval;
+let miss=0;
+
+target.innerHTML=correctText.split("").map(c=>`<span>${c}</span>`).join("");
+
+function startCountdown(){
+
+let c=3;
+
+countdown.textContent=c;
+
+const cd=setInterval(()=>{
+
+c--;
+
+if(c>0){
+
+countdown.textContent=c;
+
+}else{
+
+countdown.textContent="GO";
+
+clearInterval(cd);
+
+setTimeout(()=>{
+
+countdown.textContent="";
+startGame();
+
+},500)
+
+}
+
+},1000)
+
+}
+
+function startGame(){
+
+input.disabled=false;
+input.value="";
+input.focus();
+
+miss=0;
+missEl.textContent=0;
+
+startTime=performance.now();
+
+interval=setInterval(updateStats,50);
+
+}
+
+function updateStats(){
+
+const t=(performance.now()-startTime)/1000;
+
+timer.textContent=t.toFixed(2);
+
+const kps=input.value.length/t;
+
+kpsEl.textContent=kps.toFixed(2);
+
+const pace=(t/WR).toFixed(2);
+
+paceEl.textContent=pace;
+
+}
+
+function stopGame(){
+
+clearInterval(interval);
+
+const t=(performance.now()-startTime)/1000;
+
+saveRanking(t);
+
+input.disabled=true;
+
+}
+
+function saveRanking(time){
+
+let r=JSON.parse(localStorage.getItem("typingWR"))||[];
+
+r.push(time);
+
+r.sort((a,b)=>a-b);
+
+r=r.slice(0,10);
+
+localStorage.setItem("typingWR",JSON.stringify(r));
+
+showRanking();
+
+}
+
+function showRanking(){
+
+const r=JSON.parse(localStorage.getItem("typingWR"))||[];
+
+rankingEl.innerHTML="";
+
+r.forEach((t,i)=>{
+
+const li=document.createElement("li");
+
+li.textContent=`${i+1}位 ${t.toFixed(2)} sec`;
+
+rankingEl.appendChild(li);
+
+})
+
+}
+
+input.addEventListener("input",()=>{
+
+const v=input.value.toUpperCase();
+
+const spans=target.querySelectorAll("span");
+
+spans.forEach((s,i)=>{
+
+if(v[i]==null){
+
+s.className="";
+
+}else if(v[i]===correctText[i]){
+
+s.className="text-green-400";
+
+}else{
+
+s.className="text-red-400";
+
+miss++;
+missEl.textContent=miss;
+
+}
+
+});
+
+if(v===correctText){
+
+stopGame();
+
+}
+
+});
+
+startBtn.onclick=startCountdown;
+
+showRanking();
+
+</script>
+
+</body>
+</html>
