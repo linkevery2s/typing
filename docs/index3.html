@@ -86,26 +86,28 @@ target.innerHTML=correctText.split("").map(c=>`<span>${c}</span>`).join("");
 
 function startCountdown(){
 
-let c=3;
-countdown.textContent=c;
+let c = 3;
+countdown.textContent = c;
 
-const cd=setInterval(()=>{
+const cd = setInterval(()=>{
 
 c--;
 
-if(c>0){
+if(c > 0){
 
-countdown.textContent=c;
+  countdown.textContent = c;
 
 }else{
 
-countdown.textContent="GO";
-clearInterval(cd);
+  clearInterval(cd);
 
-setTimeout(()=>{
-countdown.textContent="";
-startGame();
-},500)
+  countdown.textContent = "GO";
+
+  startGame();   // ←ここで即スタート
+
+  setTimeout(()=>{
+    countdown.textContent = "";
+  },300);
 
 }
 
